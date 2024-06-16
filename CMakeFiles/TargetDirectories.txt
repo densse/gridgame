@@ -1,0 +1,3 @@
+C:/Users/bowde/imagetest/CMakeFiles/i.dir
+C:/Users/bowde/imagetest/CMakeFiles/ALL_BUILD.dir
+C:/Users/bowde/imagetest/CMakeFiles/ZERO_CHECK.dir

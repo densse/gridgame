@@ -1,0 +1,3 @@
+C:/Users/bowde/imagetest/build/CMakeFiles/i.dir
+C:/Users/bowde/imagetest/build/CMakeFiles/edit_cache.dir
+C:/Users/bowde/imagetest/build/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,62 @@
+[
+{
+  "directory": "C:/Users/bowde/imagetest/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\cc.exe -IC:/Users/bowde/imagetest/dependencies -o CMakeFiles\\i.dir\\src\\glad.c.obj -c C:\\Users\\bowde\\imagetest\\src\\glad.c",
+  "file": "C:\\Users\\bowde\\imagetest\\src\\glad.c",
+  "output": "CMakeFiles\\i.dir\\src\\glad.c.obj"
+},
+{
+  "directory": "C:/Users/bowde/imagetest/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\c++.exe -IC:/Users/bowde/imagetest/dependencies -std=gnu++20 -o CMakeFiles\\i.dir\\src\\quadMesh.cpp.obj -c C:\\Users\\bowde\\imagetest\\src\\quadMesh.cpp",
+  "file": "C:\\Users\\bowde\\imagetest\\src\\quadMesh.cpp",
+  "output": "CMakeFiles\\i.dir\\src\\quadMesh.cpp.obj"
+},
+{
+  "directory": "C:/Users/bowde/imagetest/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\c++.exe -IC:/Users/bowde/imagetest/dependencies -std=gnu++20 -o CMakeFiles\\i.dir\\src\\loadShader.cpp.obj -c C:\\Users\\bowde\\imagetest\\src\\loadShader.cpp",
+  "file": "C:\\Users\\bowde\\imagetest\\src\\loadShader.cpp",
+  "output": "CMakeFiles\\i.dir\\src\\loadShader.cpp.obj"
+},
+{
+  "directory": "C:/Users/bowde/imagetest/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\c++.exe -IC:/Users/bowde/imagetest/dependencies -std=gnu++20 -o CMakeFiles\\i.dir\\src\\loadString.cpp.obj -c C:\\Users\\bowde\\imagetest\\src\\loadString.cpp",
+  "file": "C:\\Users\\bowde\\imagetest\\src\\loadString.cpp",
+  "output": "CMakeFiles\\i.dir\\src\\loadString.cpp.obj"
+},
+{
+  "directory": "C:/Users/bowde/imagetest/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\c++.exe -IC:/Users/bowde/imagetest/dependencies -std=gnu++20 -o CMakeFiles\\i.dir\\src\\generateTexture.cpp.obj -c C:\\Users\\bowde\\imagetest\\src\\generateTexture.cpp",
+  "file": "C:\\Users\\bowde\\imagetest\\src\\generateTexture.cpp",
+  "output": "CMakeFiles\\i.dir\\src\\generateTexture.cpp.obj"
+},
+{
+  "directory": "C:/Users/bowde/imagetest/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\c++.exe -IC:/Users/bowde/imagetest/dependencies -std=gnu++20 -o CMakeFiles\\i.dir\\src\\main.cpp.obj -c C:\\Users\\bowde\\imagetest\\src\\main.cpp",
+  "file": "C:\\Users\\bowde\\imagetest\\src\\main.cpp",
+  "output": "CMakeFiles\\i.dir\\src\\main.cpp.obj"
+},
+{
+  "directory": "C:/Users/bowde/imagetest/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\c++.exe -IC:/Users/bowde/imagetest/dependencies -std=gnu++20 -o CMakeFiles\\i.dir\\src\\player.cpp.obj -c C:\\Users\\bowde\\imagetest\\src\\player.cpp",
+  "file": "C:\\Users\\bowde\\imagetest\\src\\player.cpp",
+  "output": "CMakeFiles\\i.dir\\src\\player.cpp.obj"
+},
+{
+  "directory": "C:/Users/bowde/imagetest/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\c++.exe -IC:/Users/bowde/imagetest/dependencies -std=gnu++20 -o CMakeFiles\\i.dir\\src\\algebra.cpp.obj -c C:\\Users\\bowde\\imagetest\\src\\algebra.cpp",
+  "file": "C:\\Users\\bowde\\imagetest\\src\\algebra.cpp",
+  "output": "CMakeFiles\\i.dir\\src\\algebra.cpp.obj"
+},
+{
+  "directory": "C:/Users/bowde/imagetest/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\c++.exe -IC:/Users/bowde/imagetest/dependencies -std=gnu++20 -o CMakeFiles\\i.dir\\src\\walls.cpp.obj -c C:\\Users\\bowde\\imagetest\\src\\walls.cpp",
+  "file": "C:\\Users\\bowde\\imagetest\\src\\walls.cpp",
+  "output": "CMakeFiles\\i.dir\\src\\walls.cpp.obj"
+},
+{
+  "directory": "C:/Users/bowde/imagetest/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\c++.exe -IC:/Users/bowde/imagetest/dependencies -std=gnu++20 -o CMakeFiles\\i.dir\\src\\solids.cpp.obj -c C:\\Users\\bowde\\imagetest\\src\\solids.cpp",
+  "file": "C:\\Users\\bowde\\imagetest\\src\\solids.cpp",
+  "output": "CMakeFiles\\i.dir\\src\\solids.cpp.obj"
+}
+]
