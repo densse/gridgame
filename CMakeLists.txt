@@ -4,7 +4,8 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_executable(
 	i 
-	src/glad.c src/quadMesh.cpp 
+	src/glad.c 
+	src/quadMesh.cpp 
 	src/loadShader.cpp 
 	src/loadString.cpp 
 	src/generateTexture.cpp 
@@ -17,4 +18,4 @@ add_executable(
 
 target_include_directories(i PRIVATE dependencies)
 
-target_link_libraries(i PRIVATE C:/Users/bowde/lib/libglfw3.a)
+target_link_libraries(i PRIVATE C:/lib/libglfw3.a)

@@ -121,8 +121,8 @@ build CMakeFiles/i.dir/src/solids.cpp.obj: CXX_COMPILER__i_unscanned_ C$:/Users/
 #############################################
 # Link the executable i.exe
 
-build i.exe: CXX_EXECUTABLE_LINKER__i_ CMakeFiles/i.dir/src/glad.c.obj CMakeFiles/i.dir/src/quadMesh.cpp.obj CMakeFiles/i.dir/src/loadShader.cpp.obj CMakeFiles/i.dir/src/loadString.cpp.obj CMakeFiles/i.dir/src/generateTexture.cpp.obj CMakeFiles/i.dir/src/main.cpp.obj CMakeFiles/i.dir/src/player.cpp.obj CMakeFiles/i.dir/src/algebra.cpp.obj CMakeFiles/i.dir/src/walls.cpp.obj CMakeFiles/i.dir/src/solids.cpp.obj | C$:/Users/bowde/lib/libglfw3.a
-  LINK_LIBRARIES = C:/Users/bowde/lib/libglfw3.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+build i.exe: CXX_EXECUTABLE_LINKER__i_ CMakeFiles/i.dir/src/glad.c.obj CMakeFiles/i.dir/src/quadMesh.cpp.obj CMakeFiles/i.dir/src/loadShader.cpp.obj CMakeFiles/i.dir/src/loadString.cpp.obj CMakeFiles/i.dir/src/generateTexture.cpp.obj CMakeFiles/i.dir/src/main.cpp.obj CMakeFiles/i.dir/src/player.cpp.obj CMakeFiles/i.dir/src/algebra.cpp.obj CMakeFiles/i.dir/src/walls.cpp.obj CMakeFiles/i.dir/src/solids.cpp.obj | C$:/lib/libglfw3.a
+  LINK_LIBRARIES = C:/lib/libglfw3.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\i.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
