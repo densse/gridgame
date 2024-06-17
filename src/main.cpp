@@ -86,7 +86,6 @@ int main()
 
 void moveSandpile(int startX, int startY, int offsetX, int offsetY)
 {
-
 	if(solids->solids[startX + offsetX][startY + offsetY].type() == typeid(solidController::sandpile))
 	{
 		std::cout << "pushing sandpile" << "\n";
@@ -105,6 +104,22 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 	glViewport(0, 0, width, height);
 }
 
+bool checkSandpileCollisions(int x, int y, int offsetX, int offsetY)
+{
+	bool move = true;
+	
+	if(solids->solids[x+offsetX][y+offsetY].type() == typeid(solidController::sandpile))
+	{
+		move = checkSandpileCollisions(x+offsetX, y+offsetY, offsetX, offsetY);
+		std::cout << "checking collisions";
+	}
+	if(x+offsetX < 0 or x+offsetX >= 5 or y+offsetY < 0 or y+offsetY >= 5)
+	{
+		move = false;
+	}
+	return move;
+}
+
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	int x = static_cast<int>(playerObject->x/16.f);
@@ -115,23 +130,29 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 	//std::cout << y << "\n";
     if (key == GLFW_KEY_W && action == GLFW_PRESS && not(walls->walls[x][y+1]) && y+1 < 5)
 	{
-		if(solids->solids[x][y+1].type() == typeid(solidController::sandpile) && y+2 < 5)
+		bool move = checkSandpileCollisions(x, y, 0, 1);
+
+		if(solids->solids[x][y+1].type() == typeid(solidController::sandpile) && y+2 < 5 && move)
+		{
+			moveSandpile(x, y+1, 0, 1);
+			playerObject->up();
+		}
+		else if(move)
 		{
 			playerObject->up();
-			moveSandpile(x, y+1, 0, 1);
 		}
-		else if(y+2 < 5 or solids->solids[x][y+1].type() != typeid(solidController::sandpile))
-		playerObject->up();
 	}
 
 	if (key == GLFW_KEY_A && action == GLFW_PRESS && not(walls->walls[x-1][y]) && x-1 >= 0)
 	{
-		if(solids->solids[x-1][y].type() == typeid(solidController::sandpile) && x-2 >= 0)
+		bool move = checkSandpileCollisions(x, y, -1, 0);
+
+		if(solids->solids[x-1][y].type() == typeid(solidController::sandpile) && x-2 >= 0 && move)
 		{
 			moveSandpile(x-1, y, -1, 0);
 			playerObject->left();
 		}
-		else if(x-2 >= 0 or solids->solids[x-1][y].type() != typeid(solidController::sandpile))
+		else if(move)
 		{
 			playerObject->left();
 		}
@@ -139,12 +160,14 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 	if (key == GLFW_KEY_S && action == GLFW_PRESS && not(walls->walls[x][y-1]) && y-1 >= 0)
 	{
-		if(solids->solids[x][y-1].type() == typeid(solidController::sandpile) && y-2 >= 0)
+		bool move = checkSandpileCollisions(x, y, 0, -1);
+
+		if(solids->solids[x][y-1].type() == typeid(solidController::sandpile) && y-2 >= 0 && move)
 		{
 			moveSandpile(x, y-1, 0, -1);
 			playerObject->down();
 		}
-		else if(y-2 >= 0 or solids->solids[x][y-1].type() != typeid(solidController::sandpile))
+		else if(move)
 		{
 			playerObject->down();
 		}
@@ -152,17 +175,16 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 	if (key == GLFW_KEY_D && action == GLFW_PRESS && not(walls->walls[x+1][y]) && x+1 < 5)
 	{
-		
-		if(solids->solids[x+1][y].type() == typeid(solidController::sandpile) && x+2 < 5)
+		bool move = checkSandpileCollisions(x, y, 1, 0);
+
+		if(solids->solids[x+1][y].type() == typeid(solidController::sandpile) && x+1 < 5 && move)
 		{
 			moveSandpile(x+1, y, 1, 0);
 			playerObject->right();
 		}
-		else if(x+2 < 5 or solids->solids[x+1][y].type() != typeid(solidController::sandpile))
+		else if(move)
 		{
 			playerObject->right();
 		}
 	}
 }
-
-
