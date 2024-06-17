@@ -113,7 +113,7 @@ bool checkSandpileCollisions(int x, int y, int offsetX, int offsetY)
 		move = checkSandpileCollisions(x+offsetX, y+offsetY, offsetX, offsetY);
 		std::cout << "checking collisions";
 	}
-	if(x+offsetX < 0 or x+offsetX >= 5 or y+offsetY < 0 or y+offsetY >= 5)
+	if(x+offsetX < 0 or x+offsetX >= 5 or y+offsetY < 0 or y+offsetY >= 5 or walls->walls[x+offsetX][y+offsetY] != 0)
 	{
 		move = false;
 	}
