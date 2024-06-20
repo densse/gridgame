@@ -20,25 +20,25 @@ void moveSandpile(int startX, int startY, int offsetX, int offsetY, coreControll
 	core->solids[startX][startY] = 0;
 	core->solids[startX + offsetX][startY + offsetY] = sandpile;
 	std::cout << "moving sandpile" << "\n";
-
 }
 
 bool checkSandpileCollisions(int x, int y, int offsetX, int offsetY, coreController* core)
 {
 	bool move = true;
 	
-	if(core->solids[x+offsetX][y+offsetY].type() == typeid(solidController::sandpile))
-	{
-		move = checkSandpileCollisions(x+offsetX, y+offsetY, offsetX, offsetY, core);
-		std::cout << "checking collisions" << "\n";
-	}
-	if(x+offsetX < 0 or x+offsetX >= 5 or y+offsetY < 0 or y+offsetY >= 5 or core->walls[x+offsetX][y+offsetY] != 0)
+
+	if(core->impassables[x+offsetX+1][y+offsetY+1] != 0)
 	{
 		move = false;
+		std::cout << "blocked\n";
+	}
+	else if(core->solids[x+offsetX][y+offsetY].type() == typeid(solidController::sandpile))
+	{
+		move = checkSandpileCollisions(x+offsetX, y+offsetY, offsetX, offsetY, core);
+		std::cout << "checking collisions\n";
 	}
 	return move;
 }
-
 
 player::player(coreController* coreParam)
 {
@@ -51,7 +51,6 @@ player::player(coreController* coreParam)
 	scaleX = 2./roomWidth;
 	scaleY = 2./roomHeight;
 	core = coreParam;
-
 }
 
 void player::setup()
@@ -142,84 +141,63 @@ void player::up()
 	//std::cout << playerObject->y << "\n";
 	//std::cout << x << "\n";
 	//std::cout << y << "\n";
-	if (not(core->walls[xi][yi+1]) && yi+1 < 5)
-	{
-		bool move = checkSandpileCollisions(xi, yi, 0, 1, core);
+	bool move = checkSandpileCollisions(xi, yi, 0, 1, core);
 
-		if(core->solids[xi][yi+1].type() == typeid(solidController::sandpile) && yi+2 < 5 && move)
+	if(move)
+	{
+		y+=16;
+		if(core->solids[xi][yi+1].type() == typeid(solidController::sandpile))
 		{
 			moveSandpile(xi, yi+1, 0, 1, core);
-			y+=16;
-			//playerObject2->up();
-		}
-		else if(move)
-		{
-			y+=16;
-			//playerObject2->up();
 		}
 	}
+	
 }
 void player::left()
 {
 	int xi = static_cast<int>(x/16.f);
 	int yi = static_cast<int>(y/16.f);
-	if (not(core->walls[xi-1][yi]) && xi-1 >= 0)
+	bool move = checkSandpileCollisions(xi, yi, -1, 0, core);
+	if(move)
 	{
-		bool move = checkSandpileCollisions(xi, yi, -1, 0, core);
-
-		if(core->solids[xi-1][yi].type() == typeid(solidController::sandpile) && xi-2 >= 0 && move)
+		x-=16;
+		if(core->solids[xi-1][yi].type() == typeid(solidController::sandpile))
 		{
 			moveSandpile(xi-1, yi, -1, 0, core);
-			x-=16;
-			//playerObject2->left();
-		}
-		else if(move)
-		{
-			x-=16;
-			//playerObject2->left();
 		}
 	}
+	
 }
 
 void player::down()
 {
 	int xi = static_cast<int>(x/16.f);
 	int yi = static_cast<int>(y/16.f);
-	if (not(core->walls[xi][yi-1]) && yi-1 >= 0)
-	{
-		bool move = checkSandpileCollisions(xi, yi, 0, -1, core);
+	bool move = checkSandpileCollisions(xi, yi, 0, -1, core);
 
-		if(core->solids[xi][yi-1].type() == typeid(solidController::sandpile) && yi-2 >= 0 && move)
+	if(move)
+	{
+		y-=16;
+		if(core->solids[xi][yi-1].type() == typeid(solidController::sandpile))
 		{
 			moveSandpile(xi, yi-1, 0, -1, core);
-			y-=16;
-			//playerObject2->down();
-		}
-		else if(move)
-		{
-			y-=16;
-			//playerObject2->down();
 		}
 	}
+	
 }
 void player::right()
 {
 	int xi = static_cast<int>(x/16.f);
 	int yi = static_cast<int>(y/16.f);
-	if (not(core->walls[xi+1][yi]) && xi+1 < 5)
-	{
-		bool move = checkSandpileCollisions(xi, yi, 1, 0, core);
+	bool move = checkSandpileCollisions(xi, yi, 1, 0, core);
 
-		if(core->solids[xi+1][yi].type() == typeid(solidController::sandpile) && xi+1 < 5 && move)
+	if(move)
+	{
+		x+=16;
+		if(core->solids[xi+1][yi].type() == typeid(solidController::sandpile))
 		{
 			moveSandpile(xi+1, yi, 1, 0, core);
-			x+=16;
-			//playerObject2->right();
-		}
-		else if(move)
-		{
-			x+=16;
-			//playerObject2->right();
 		}
 	}
+	
 }

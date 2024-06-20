@@ -71,19 +71,20 @@ wallController::wallController(coreController* coreParameter)
 }
 void wallController::setup()
 {
-	for(int y = 0; y < 5; y++)
+	for(int y = 4; y >= 0; y--)
 	{
 		for(int x = 0; x < 5; x++)
 		{
 			if(core->walls[x][y] == 1)
 			{
 				wallQuads[x][y] = new quadMesh(16.*scaleX, 16.*scaleY);
-				//core->impassables[i+1][j+1] = true;
+				core->impassables[x+1][y+1] = true;
 				//std::cout << core->impassables[i+1][j+1] << " ";
 			}
 			else
 			{
 				wallQuads[x][y] = 0;
+				core->impassables[x+1][y+1] = false;
 				//std::cout << core->impassables[i+1][j+1] << " ";
 			}
 		}
@@ -91,6 +92,14 @@ void wallController::setup()
 	}
 	//wallQuads = new quadMesh(16.*scaleX, 16.*scaleY);
 
+	for(int y = 6; y>=0; y--)
+	{
+		for(int x = 0; x < 7; x++)
+		{
+			std::cout << core->impassables[x][y] << " ";
+		}
+		std::cout << "\n";
+	}
 	vec3 transformation = {0.0, 0.0, 0.0};
 	model = matrixCreateTransform(transformation);
 

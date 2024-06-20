@@ -85,7 +85,7 @@ int main()
 	}
 
 	delete playerObject;
-	//delete playerObject2;
+	delete playerObject2;
 	delete solids;
 	delete walls;
 	glfwTerminate();
