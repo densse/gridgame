@@ -13,30 +13,30 @@ bool (*loadLevelWalls())[5]
 	std::string d;
 	if(data.is_open())
 	{
-		for(int i = 0; i < 5; i++)
+		for(int y = 4; y >= 0; y--)
 		{
-			for(int j = 0; j < 5; j++)
+			for(int x = 0; x < 5; x++)
 			{
 				d = data.get();
 				if(d == "1")
 				{
-					walls[i][j] = true;
-					std::cout << walls[i][j];
+					walls[x][y] = true;
+					std::cout << walls[x][y];
 				}
 				else if(d == "0")
 				{
-					walls[i][j] = false;
-					std::cout << walls[i][j];
+					walls[x][y] = false;
+					std::cout << walls[x][y];
 				}
 				else if(d == "\n")
 				{
-					std::cout << "\nnewline char skipping" << "\n";
-					j--;
+					std::cout << "newline char skipping\n";
+					x--;
 				}
 				else
 				{
 					std::cout << "undefined symbol: " << d << " continuing" << "\n";
-					j--;
+					x--;
 				}
 			}
 			std::cout << "\n";
@@ -50,40 +50,44 @@ bool (*loadLevelWalls())[5]
 	return walls;
 }
 
-wallController::wallController()
+wallController::wallController(coreController* coreParameter)
 {
+	core = coreParameter;
 	roomWidth = 142;
 	roomHeight = 80;
 	scaleX = 2./roomWidth;
 	scaleY = 2./roomHeight;
-	//levelSize = 5;
-	//bool(*walls)[5];
 	walls = loadLevelWalls();
 
-	for (int i = 0; i < levelSize; ++i) {
-		for (int j = 0; j < levelSize; ++j) {
-			std::cout << walls[i][j]<<" ";
+	for (int y = 4; y >= 0; y--) 
+	{
+		for (int x = 0; x < 5; x++) 
+		{
+			std::cout << walls[x][y]<<" ";
 		}
-		std::cout << std::endl;
+		std::cout << "\n";
     }
 
 }
 void wallController::setup()
 {
-	
-	for(int i = 0; i < 5; i++)
+	for(int y = 0; y < 5; y++)
 	{
-		for(int j = 0; j < 5; j++)
+		for(int x = 0; x < 5; x++)
 		{
-			if(walls[i][j] == 1)
+			if(walls[x][y] == 1)
 			{
-				wallQuads[i][j] = new quadMesh(16.*scaleX, 16.*scaleY);
+				wallQuads[x][y] = new quadMesh(16.*scaleX, 16.*scaleY);
+				//core->impassables[i+1][j+1] = true;
+				//std::cout << core->impassables[i+1][j+1] << " ";
 			}
 			else
 			{
-				wallQuads[i][j] = 0;
+				wallQuads[x][y] = 0;
+				//std::cout << core->impassables[i+1][j+1] << " ";
 			}
 		}
+		//std::cout << "\n";
 	}
 	//wallQuads = new quadMesh(16.*scaleX, 16.*scaleY);
 
@@ -128,20 +132,28 @@ void wallController::step()
 void wallController::draw()
 {
 	glBindTexture(GL_TEXTURE_2D, texture);	
-	for(int i = 0; i < 5; i++)
+	for(int y = 4; y >= 0; y--)
 	{
-		for(int j = 0; j < 5; j++)
+		for(int x = 0; x < 5; x++)
 		{
-			if(wallQuads[i][j] != 0)
+			if(wallQuads[x][y] != 0)
 			{
-				model.entries[12] = 16. * scaleX * i;
-				model.entries[13] = 16. * scaleY * j;
+				model.entries[12] = 16. * scaleX * x;
+				model.entries[13] = 16. * scaleY * y;
 				glUniformMatrix4fv(modelLocation, 1, GL_FALSE, model.entries);
 				glUniform1i(textureLocation, 0);
-				wallQuads[i][j]->draw();
+				wallQuads[x][y]->draw();
+				//std::cout << "1" << " ";
 			}
+			else
+			{
+				//std::cout << "0" << " ";
+			}
+			
 		}
+		//std::cout << "\n";	
 	}
+	//std::cout << "\n";
 	//wallQuads->draw();
 }
 
@@ -150,7 +162,7 @@ wallController::~wallController()
 	glDeleteProgram(shaderProgram);
 	//delete wallQuads[0][0];
 
-	for(int i = 0; i< 5; i++)
+	for(int i = 0; i < 5; i++)
 	{
 		for(int j = 0; j < 5; j++)
 		{

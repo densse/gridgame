@@ -3,7 +3,7 @@
 
 quadMesh::quadMesh(float width, float height)
 {
-	std::cout << "creating mesh\n";
+	//std::cout << "creating mesh\n";
 
 	float i = 2.f/3.5f;
 	float data1[] = {

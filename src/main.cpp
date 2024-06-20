@@ -1,17 +1,18 @@
 #include "config.h"
 #include "loadShader.h"
 #include "player.h"
-#include "walls.h"
 #include "solids.h"
+#include "core.h"
+#include "walls.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void generateTexture(const std::string filename);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 void moveSandpile(int startX, int startY, int offsetX, int offsetY);
 
+coreController* core = new coreController();
 player* playerObject = new player();
-//player* playerObject2 = new player();
-wallController* walls = new wallController();
+wallController* walls = new wallController(core);
 solidController* solids = new solidController();
 
 int main()
@@ -111,7 +112,7 @@ bool checkSandpileCollisions(int x, int y, int offsetX, int offsetY)
 	if(solids->solids[x+offsetX][y+offsetY].type() == typeid(solidController::sandpile))
 	{
 		move = checkSandpileCollisions(x+offsetX, y+offsetY, offsetX, offsetY);
-		std::cout << "checking collisions";
+		std::cout << "checking collisions" << "\n";
 	}
 	if(x+offsetX < 0 or x+offsetX >= 5 or y+offsetY < 0 or y+offsetY >= 5 or walls->walls[x+offsetX][y+offsetY] != 0)
 	{

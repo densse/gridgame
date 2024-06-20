@@ -11,4 +11,3 @@ void main()
     gl_Position = model * vec4(aPos.x, aPos.y, aPos.z, 1.0);
 	texCoord = 0.5+0.5*vec2(aTexCoord.x, aTexCoord.y);
 }
-

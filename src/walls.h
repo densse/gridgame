@@ -1,15 +1,18 @@
+#pragma once
+
 #include "quadMesh.h"
 #include "algebra.h"
+#include "core.h"
 class wallController {
 	public:
-		wallController();
+		wallController(coreController* coreParameter);
 		void draw();
 		void step();
 		void setup();
 		~wallController();
 		bool (*walls)[5];
+		coreController* core;
 	private:
-		
 		unsigned int shaderProgram, modelLocation, textureLocation, texture;
 		float scaleX, scaleY;
 		int roomHeight, roomWidth;

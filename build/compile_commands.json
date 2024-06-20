@@ -58,5 +58,11 @@
   "command": "C:\\msys64\\ucrt64\\bin\\c++.exe -IC:/Users/bowde/imagetest/dependencies -std=gnu++20 -o CMakeFiles\\i.dir\\src\\solids.cpp.obj -c C:\\Users\\bowde\\imagetest\\src\\solids.cpp",
   "file": "C:\\Users\\bowde\\imagetest\\src\\solids.cpp",
   "output": "CMakeFiles\\i.dir\\src\\solids.cpp.obj"
+},
+{
+  "directory": "C:/Users/bowde/imagetest/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\c++.exe -IC:/Users/bowde/imagetest/dependencies -std=gnu++20 -o CMakeFiles\\i.dir\\src\\core.cpp.obj -c C:\\Users\\bowde\\imagetest\\src\\core.cpp",
+  "file": "C:\\Users\\bowde\\imagetest\\src\\core.cpp",
+  "output": "CMakeFiles\\i.dir\\src\\core.cpp.obj"
 }
 ]

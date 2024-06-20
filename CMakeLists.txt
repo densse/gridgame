@@ -14,6 +14,7 @@ add_executable(
 	src/algebra.cpp
 	src/walls.cpp
 	src/solids.cpp
+	src/core.cpp
 	)
 
 target_include_directories(i PRIVATE dependencies)
