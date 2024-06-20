@@ -8,26 +8,26 @@
 
 unsigned int (*loadLevelSolids())[5]
 {
-	std::cout << "loading level solids" << "\n";
+	std::cout << "\n\nloading level solids" << "\n";
 	static unsigned int solids[5][5];
 	std::ifstream data ("../assets/levels/solids.s");
 	std::string d;
 	if(data.is_open())
 	{
-		for(int i = 0; i < 5; i++)
+		for(int y = 4; y >= 0; y--)
 		{
-			for(int j = 0; j < 5; j++)
+			for(int x = 0; x < 5; x++)
 			{
 				d = data.get();
 				if(d == "\n")
 				{
-					std::cout << "\nnewline char skipping" << "\n";
-					j--;
+					std::cout << "newline char skipping" << "\n";
+					x--;
 				}
 				else
 				{
-					solids[i][j] = std::stoi(d);
-					std::cout << solids[i][j];
+					solids[x][y] = std::stoi(d);
+					std::cout << solids[x][y];
 				}
 			}
 			std::cout << "\n";
@@ -56,30 +56,30 @@ void solidController::setup()
 
 	//boost::any solids[5][5];
 
-	for (int i = 0; i < levelSize; i++) 
+	for (int y = 4; y >= 0; y--) 
 	{
-		for (int j = 0; j < levelSize; j++) 
+		for (int x = 0; x < levelSize; x++) 
 		{
-			if(solidsData[i][j] == 1)//sandpile
+			if(solidsData[x][y] == 1)//sandpile
 			{
 				sandpile sandpileStruct;
 				sandpileStruct.quad = new quadMesh(16.*scaleX, 16.*scaleY);
-				solids[i][j] = sandpileStruct; //reverses becuase of a bug
-				sandpile solidPointer = boost::any_cast<sandpile>(solids[i][j]);
+				solids[x][y] = sandpileStruct; //reverses becuase of a bug
+				sandpile solidPointer = boost::any_cast<sandpile>(solids[x][y]);
 				std::cout << solidPointer.id << " ";
 			}
-			else if(solidsData[i][j] == 2)//gate
+			else if(solidsData[x][y] == 2)//gate
 			{
 				gate gateStruct;
 				gateStruct.quad = new quadMesh(16.*scaleX, 16.*scaleY);
-				solids[i][j] = gateStruct;
-				gate gatePointer = boost::any_cast<gate>(solids[i][j]);
+				solids[x][y] = gateStruct;
+				gate gatePointer = boost::any_cast<gate>(solids[x][y]);
 				std::cout << gatePointer.id << " ";
 			}
 			else
 			{
-				std::cout << solidsData[i][j] << " ";
-				solids[j][i] = 0;
+				std::cout << solidsData[x][y] << " ";
+				solids[x][y] = 0;
 			}
 		}
 		std::cout << std::endl;
@@ -129,27 +129,27 @@ void solidController::step()
 void solidController::draw()
 {
 	glBindTexture(GL_TEXTURE_2D, texture);	
-	for(int i = 0; i < 5; i++)
+	for(int y = 4; y >= 0; y--)
 	{
-		for(int j = 0; j < 5; j++)
+		for(int x = 0; x < 5; x++)
 		{
-			if(solids[i][j].type() == typeid(sandpile))
+			if(solids[x][y].type() == typeid(sandpile))
 			{
 				glBindTexture(GL_TEXTURE_2D, sandpileTexture);
-				sandpile sandpileStruct = boost::any_cast<sandpile>(solids[i][j]);
-				model.entries[12] = 16. * scaleX * i;
-				model.entries[13] = 16. * scaleY * j;
+				sandpile sandpileStruct = boost::any_cast<sandpile>(solids[x][y]);
+				model.entries[12] = 16. * scaleX * x;
+				model.entries[13] = 16. * scaleY * y;
 				glUniformMatrix4fv(modelLocation, 1, GL_FALSE, model.entries);
 				glUniform1i(textureLocation, 0);
 				sandpileStruct.quad->draw();
 			}
 
-			if(solids[i][j].type() == typeid(gate))
+			if(solids[x][y].type() == typeid(gate))
 			{
 				glBindTexture(GL_TEXTURE_2D, gateTexture);
-				gate gateStruct = boost::any_cast<gate>(solids[i][j]);
-				model.entries[12] = 16. * scaleX * i;
-				model.entries[13] = 16. * scaleY * j;
+				gate gateStruct = boost::any_cast<gate>(solids[x][y]);
+				model.entries[12] = 16. * scaleX * x;
+				model.entries[13] = 16. * scaleY * y;
 				glUniformMatrix4fv(modelLocation, 1, GL_FALSE, model.entries);
 				glUniform1i(textureLocation, 0);
 				gateStruct.quad->draw();

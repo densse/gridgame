@@ -7,7 +7,7 @@
 int levelSize = 5;
 bool (*loadLevelWalls())[5]
 {
-	std::cout << "loading level walls" << "\n";
+	std::cout << "\n\nloading level walls" << "\n";
 	static bool walls[5][5];
 	std::ifstream data ("../assets/levels/walls.w");
 	std::string d;
@@ -59,14 +59,14 @@ wallController::wallController(coreController* coreParameter)
 	scaleY = 2./roomHeight;
 	walls = loadLevelWalls();
 
-	for (int y = 4; y >= 0; y--) 
-	{
-		for (int x = 0; x < 5; x++) 
-		{
-			std::cout << walls[x][y]<<" ";
-		}
-		std::cout << "\n";
-    }
+	//for (int y = 4; y >= 0; y--) 
+	//{
+	//	for (int x = 0; x < 5; x++) 
+	//	{
+	//		std::cout << walls[x][y]<<" ";
+	//	}
+	//	std::cout << "\n";
+    //}
 
 }
 void wallController::setup()
