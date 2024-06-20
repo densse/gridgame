@@ -1,9 +1,10 @@
 #include "quadMesh.h"
 #include "algebra.h"
+#include "core.h"
 class player {
 	public:
 		float x, y;
-		player();
+		player(coreController* coreParma);
 		void draw();
 		void step();
 		void up();
@@ -19,4 +20,5 @@ class player {
 		vec3 translation;
 		mat4 model;
 		int roomWidth, roomHeight;
+		coreController* core;
 };

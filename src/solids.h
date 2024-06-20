@@ -2,9 +2,10 @@
 #include "algebra.h"
 #include "boost/any.hpp"
 #include "quadMesh.h"
+#include "core.h"
 class solidController {
 	public:
-		solidController();
+		solidController(coreController* coreParam);
 		void setup();
 		void step();
 		void draw();
@@ -25,12 +26,12 @@ class solidController {
 			int wavelength = 0;
 			quadMesh* quad;
 		};
-		boost::any solids[5][5];
+		//boost::any solids[5][5];
 
 	private:
 		unsigned int (*solidsData)[5], shaderProgram, textureLocation, texture, modelLocation, sandpileTexture, gateTexture;
 		float scaleX, scaleY;
 		int roomWidth, roomHeight;
 		mat4 model;
-		
+		coreController* core;
 };

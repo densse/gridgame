@@ -57,7 +57,7 @@ wallController::wallController(coreController* coreParameter)
 	roomHeight = 80;
 	scaleX = 2./roomWidth;
 	scaleY = 2./roomHeight;
-	walls = loadLevelWalls();
+	core->walls = loadLevelWalls();
 
 	//for (int y = 4; y >= 0; y--) 
 	//{
@@ -75,7 +75,7 @@ void wallController::setup()
 	{
 		for(int x = 0; x < 5; x++)
 		{
-			if(walls[x][y] == 1)
+			if(core->walls[x][y] == 1)
 			{
 				wallQuads[x][y] = new quadMesh(16.*scaleX, 16.*scaleY);
 				//core->impassables[i+1][j+1] = true;

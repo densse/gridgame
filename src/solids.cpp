@@ -41,12 +41,13 @@ unsigned int (*loadLevelSolids())[5]
 	return solids;
 }
 
-solidController::solidController()
+solidController::solidController(coreController* coreParam)
 {
 	roomWidth = 142;
 	roomHeight = 80;
 	scaleX = 2./roomWidth;
 	scaleY = 2./roomHeight;
+	core = coreParam;
 }
 
 void solidController::setup()
@@ -64,22 +65,22 @@ void solidController::setup()
 			{
 				sandpile sandpileStruct;
 				sandpileStruct.quad = new quadMesh(16.*scaleX, 16.*scaleY);
-				solids[x][y] = sandpileStruct; //reverses becuase of a bug
-				sandpile solidPointer = boost::any_cast<sandpile>(solids[x][y]);
+				core->solids[x][y] = sandpileStruct; //reverses becuase of a bug
+				sandpile solidPointer = boost::any_cast<sandpile>(core->solids[x][y]);
 				std::cout << solidPointer.id << " ";
 			}
 			else if(solidsData[x][y] == 2)//gate
 			{
 				gate gateStruct;
 				gateStruct.quad = new quadMesh(16.*scaleX, 16.*scaleY);
-				solids[x][y] = gateStruct;
-				gate gatePointer = boost::any_cast<gate>(solids[x][y]);
+				core->solids[x][y] = gateStruct;
+				gate gatePointer = boost::any_cast<gate>(core->solids[x][y]);
 				std::cout << gatePointer.id << " ";
 			}
 			else
 			{
 				std::cout << solidsData[x][y] << " ";
-				solids[x][y] = 0;
+				core->solids[x][y] = 0;
 			}
 		}
 		std::cout << std::endl;
@@ -133,10 +134,10 @@ void solidController::draw()
 	{
 		for(int x = 0; x < 5; x++)
 		{
-			if(solids[x][y].type() == typeid(sandpile))
+			if(core->solids[x][y].type() == typeid(sandpile))
 			{
 				glBindTexture(GL_TEXTURE_2D, sandpileTexture);
-				sandpile sandpileStruct = boost::any_cast<sandpile>(solids[x][y]);
+				sandpile sandpileStruct = boost::any_cast<sandpile>(core->solids[x][y]);
 				model.entries[12] = 16. * scaleX * x;
 				model.entries[13] = 16. * scaleY * y;
 				glUniformMatrix4fv(modelLocation, 1, GL_FALSE, model.entries);
@@ -144,10 +145,10 @@ void solidController::draw()
 				sandpileStruct.quad->draw();
 			}
 
-			if(solids[x][y].type() == typeid(gate))
+			if(core->solids[x][y].type() == typeid(gate))
 			{
 				glBindTexture(GL_TEXTURE_2D, gateTexture);
-				gate gateStruct = boost::any_cast<gate>(solids[x][y]);
+				gate gateStruct = boost::any_cast<gate>(core->solids[x][y]);
 				model.entries[12] = 16. * scaleX * x;
 				model.entries[13] = 16. * scaleY * y;
 				glUniformMatrix4fv(modelLocation, 1, GL_FALSE, model.entries);
