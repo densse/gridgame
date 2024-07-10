@@ -3,6 +3,8 @@
 #include "quadMesh.h"
 #include "algebra.h"
 #include "core.h"
+#include <vector>
+
 class wallController {
 	public:
 		wallController(coreController* coreParameter);
@@ -11,11 +13,12 @@ class wallController {
 		void setup();
 		~wallController();
 		//bool (*walls)[5];
-		coreController* core;
 	private:
 		unsigned int shaderProgram, modelLocation, textureLocation, texture;
 		float scaleX, scaleY;
 		int roomHeight, roomWidth;
 		mat4 model;
-		quadMesh* wallQuads[5][5];
+		coreController* core;
+		int levelSize;
+		std::vector<std::vector<quadMesh*> > wallQuads;
 };

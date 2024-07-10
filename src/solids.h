@@ -29,9 +29,11 @@ class solidController {
 		//boost::any solids[5][5];
 
 	private:
-		unsigned int (*solidsData)[5], shaderProgram, textureLocation, texture, modelLocation, sandpileTexture, gateTexture;
+		unsigned int shaderProgram, textureLocation, texture, modelLocation, sandpileTexture, gateTexture;
 		float scaleX, scaleY;
 		int roomWidth, roomHeight;
 		mat4 model;
 		coreController* core;
+		std::vector<std::vector<unsigned int>> solidsData;
+		int levelSize;
 };

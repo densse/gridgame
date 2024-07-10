@@ -6,45 +6,14 @@
 #include "loadShader.h"
 #include "generateTexture.h"
 
-unsigned int (*loadLevelSolids())[5]
-{
-	std::cout << "\n\nloading level solids" << "\n";
-	static unsigned int solids[5][5];
-	std::ifstream data ("../assets/levels/solids.s");
-	std::string d;
-	if(data.is_open())
-	{
-		for(int y = 4; y >= 0; y--)
-		{
-			for(int x = 0; x < 5; x++)
-			{
-				d = data.get();
-				if(d == "\n")
-				{
-					std::cout << "newline char skipping" << "\n";
-					x--;
-				}
-				else
-				{
-					solids[x][y] = std::stoi(d);
-					std::cout << solids[x][y];
-				}
-			}
-			std::cout << "\n";
-		}
-	}
-	else
-	{
-		std::cout << "file not opened properly" << std::endl;
-	}
-	data.close();
-	return solids;
-}
+const int levelSize = 6;
 
 solidController::solidController(coreController* coreParam)
 {
-	roomWidth = 142;
-	roomHeight = 80;
+	core = coreParam;
+	levelSize = core->levelSize;
+	roomWidth = ((16*levelSize)/9)*16;
+	roomHeight = 16*levelSize;
 	scaleX = 2./roomWidth;
 	scaleY = 2./roomHeight;
 	core = coreParam;
@@ -52,20 +21,19 @@ solidController::solidController(coreController* coreParam)
 
 void solidController::setup()
 {
-	int levelSize = 5;
-	solidsData = loadLevelSolids();
+	std::cout << "\nsetting up solids\n";
+	solidsData = core->loadLevelSolids();
 
-	//boost::any solids[5][5];
-
-	for (int y = 4; y >= 0; y--) 
+	for (int y = levelSize-1; y >= 0; y--)
 	{
-		for (int x = 0; x < levelSize; x++) 
+		for (int x = 0; x < levelSize; x++)
 		{
+			std::cout << solidsData[x][y];
 			if(solidsData[x][y] == 1)//sandpile
 			{
 				sandpile sandpileStruct;
 				sandpileStruct.quad = new quadMesh(16.*scaleX, 16.*scaleY);
-				core->solids[x][y] = sandpileStruct; //reverses becuase of a bug
+				core->solids[x][y] = sandpileStruct;
 				sandpile solidPointer = boost::any_cast<sandpile>(core->solids[x][y]);
 				std::cout << solidPointer.id << " ";
 			}
@@ -73,6 +41,7 @@ void solidController::setup()
 			{
 				gate gateStruct;
 				gateStruct.quad = new quadMesh(16.*scaleX, 16.*scaleY);
+				gateStruct.wavelength = 0;
 				core->solids[x][y] = gateStruct;
 				gate gatePointer = boost::any_cast<gate>(core->solids[x][y]);
 				std::cout << gatePointer.id << " ";
@@ -130,9 +99,9 @@ void solidController::step()
 void solidController::draw()
 {
 	glBindTexture(GL_TEXTURE_2D, texture);	
-	for(int y = 4; y >= 0; y--)
+	for(int y = levelSize-1; y >= 0; y--)
 	{
-		for(int x = 0; x < 5; x++)
+		for(int x = 0; x < levelSize; x++)
 		{
 			if(core->solids[x][y].type() == typeid(sandpile))
 			{

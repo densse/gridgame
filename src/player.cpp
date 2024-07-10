@@ -42,19 +42,24 @@ bool checkSandpileCollisions(int x, int y, int offsetX, int offsetY, coreControl
 
 player::player(coreController* coreParam)
 {
+	core = coreParam;
+	std::cout << "setting up player\n";
+	int levelSize = core->levelSize;
 	x = 0.f;
 	y = 0.f;
 	vspd = 0.0f;
 	hspd = 0.0f;
-	roomWidth = 142;
-	roomHeight = 80;
+	roomWidth = ((16*levelSize)/9)*16;
+	roomHeight = 16*levelSize;
 	scaleX = 2./roomWidth;
 	scaleY = 2./roomHeight;
 	core = coreParam;
+	std::cout << "complete\n";
 }
 
 void player::setup()
 {
+	std::cout << "\nsetting up player";
 	quad = new quadMesh(16.*scaleX, 16.*scaleY);
 
 	vec3 transformation = {0.0, 0.0, 0.0};

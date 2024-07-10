@@ -4,97 +4,64 @@
 #include "loadShader.h"
 #include "generateTexture.h"
 
-int levelSize = 5;
-bool (*loadLevelWalls())[5]
-{
-	std::cout << "\n\nloading level walls" << "\n";
-	static bool walls[5][5];
-	std::ifstream data ("../assets/levels/walls.w");
-	std::string d;
-	if(data.is_open())
-	{
-		for(int y = 4; y >= 0; y--)
-		{
-			for(int x = 0; x < 5; x++)
-			{
-				d = data.get();
-				if(d == "1")
-				{
-					walls[x][y] = true;
-					std::cout << walls[x][y];
-				}
-				else if(d == "0")
-				{
-					walls[x][y] = false;
-					std::cout << walls[x][y];
-				}
-				else if(d == "\n")
-				{
-					std::cout << "newline char skipping\n";
-					x--;
-				}
-				else
-				{
-					std::cout << "undefined symbol: " << d << " continuing" << "\n";
-					x--;
-				}
-			}
-			std::cout << "\n";
-		}
-	}
-	else
-	{
-		std::cout << "file not opened properly" << std::endl;
-	}
-	data.close();
-	return walls;
-}
 
 wallController::wallController(coreController* coreParameter)
 {
 	core = coreParameter;
-	roomWidth = 142;
-	roomHeight = 80;
+	levelSize = core->levelSize;
+	roomWidth = ((16*levelSize)/9)*16;
+	roomHeight = 16*levelSize;
 	scaleX = 2./roomWidth;
 	scaleY = 2./roomHeight;
-	core->walls = loadLevelWalls();
+	core->walls = core->loadLevelWalls();
 
-	//for (int y = 4; y >= 0; y--) 
-	//{
-	//	for (int x = 0; x < 5; x++) 
-	//	{
-	//		std::cout << walls[x][y]<<" ";
-	//	}
-	//	std::cout << "\n";
-    //}
+	std::cout << "\nprinting walls\n";
+	for (int y = levelSize-1; y >= 0; y--) 
+	{
+		for (int x = 0; x < levelSize; x++) 
+		{
+			std::cout << core->walls[x][y]<<" ";
+		}
+		std::cout << "\n";
+    }
 
 }
 void wallController::setup()
 {
-	for(int y = 4; y >= 0; y--)
+	std::cout << "\nsetting up walls";
+	for(int i=0; i<levelSize; i++)
 	{
-		for(int x = 0; x < 5; x++)
+		std::vector<quadMesh*> row;
+		for(int j=0; j<levelSize; j++)
+		{
+			row.push_back(0);
+		}
+		wallQuads.push_back(row);
+	}
+
+	for(int y = levelSize-1; y >= 0; y--)
+	{
+		for(int x = 0; x < levelSize; x++)
 		{
 			if(core->walls[x][y] == 1)
 			{
 				wallQuads[x][y] = new quadMesh(16.*scaleX, 16.*scaleY);
 				core->impassables[x+1][y+1] = true;
-				//std::cout << core->impassables[i+1][j+1] << " ";
+				std::cout << wallQuads[x][y] << " ";
 			}
 			else
 			{
 				wallQuads[x][y] = 0;
-				core->impassables[x+1][y+1] = false;
-				//std::cout << core->impassables[i+1][j+1] << " ";
+				std::cout << wallQuads[x][y] << " ";
 			}
 		}
-		//std::cout << "\n";
+		std::cout << "\n";
 	}
 	//wallQuads = new quadMesh(16.*scaleX, 16.*scaleY);
 
-	for(int y = 6; y>=0; y--)
+	for(int y = levelSize+1; y>=0; y--)
 	{
-		for(int x = 0; x < 7; x++)
+		for(int x = 0; x < levelSize+2; x++)
 		{
 			std::cout << core->impassables[x][y] << " ";
 		}
@@ -141,9 +108,9 @@ void wallController::step()
 void wallController::draw()
 {
 	glBindTexture(GL_TEXTURE_2D, texture);	
-	for(int y = 4; y >= 0; y--)
+	for(int y = levelSize-1; y >= 0; y--)
 	{
-		for(int x = 0; x < 5; x++)
+		for(int x = 0; x < levelSize; x++)
 		{
 			if(wallQuads[x][y] != 0)
 			{
@@ -158,6 +125,7 @@ void wallController::draw()
 			{
 				//std::cout << "0" << " ";
 			}
+			//std::cout << wallQuads[x][y] << " ";
 			
 		}
 		//std::cout << "\n";	
@@ -171,9 +139,9 @@ wallController::~wallController()
 	glDeleteProgram(shaderProgram);
 	//delete wallQuads[0][0];
 
-	for(int i = 0; i < 5; i++)
+	for(int i = 0; i < levelSize; i++)
 	{
-		for(int j = 0; j < 5; j++)
+		for(int j = 0; j < levelSize; j++)
 		{
 			delete wallQuads[i][j];
 		}

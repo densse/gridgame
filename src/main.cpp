@@ -5,20 +5,41 @@
 #include "core.h"
 #include "walls.h"
 
+coreController* core;
+player* playerObject;
+player* playerObject2;
+wallController* walls;
+solidController* solids;
+
+void loadLevel(std::string dir)
+{
+	delete playerObject;
+	delete playerObject2;
+	delete solids;
+	delete walls;
+
+	core = new coreController(dir);
+	playerObject = new player(core);
+	playerObject2 = new player(core);
+	walls = new wallController(core);
+	solids = new solidController(core);
+
+	playerObject->setup();
+	playerObject2->setup();
+	playerObject->x = 32;
+	solids->setup();
+	walls->setup();
+}
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void generateTexture(const std::string filename);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 void moveSandpile(int startX, int startY, int offsetX, int offsetY);
 
-coreController* core = new coreController();
-player* playerObject = new player(core);
-player* playerObject2 = new player(core);
-wallController* walls = new wallController(core);
-solidController* solids = new solidController(core);
+
 
 int main()
 {
-	playerObject2->x = 32;
 	glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -47,10 +68,7 @@ int main()
 
 	glfwSetKeyCallback(window, key_callback);	//input management
 
-	playerObject->setup();
-	playerObject2->setup();
-	solids->setup();
-	walls->setup();
+	loadLevel("../assets/levels/1");
 
 	int w;
 	int a;
@@ -122,5 +140,10 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 	{
 		playerObject->left();
 		playerObject2->left();
+	}
+
+	if(key == GLFW_KEY_F && action == GLFW_PRESS)
+	{
+		loadLevel("../assets/levels/2");
 	}
 }
